@@ -7,14 +7,14 @@
 
 <div class="container py-5">
   <div class="d-flex align-items-center justify-content-between mb-3">
-    <h3 class="mb-0">My Lists</h3>
+    <h3 class="mb-0"></h3>
     <%= link_to "Create a movie list", new_list_path, class: "btn btn-flat" %>
   </div>
 
   <div class="cards">
     <% @lists.each do |list| %>
       <%= link_to list_path(list), class:"text-decoration-none" do %>
-        <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= asset_url 'filmroll.jpg' %>)">
+        <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= asset_path 'filmroll.jpg' %>)">
           <%= list.name %>
         </div>
       <% end %>
