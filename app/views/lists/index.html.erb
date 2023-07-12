@@ -1,14 +1,23 @@
-<div class="banner">
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= asset_url 'cinema.jpg' %>)">
   <div class="container">
     <h1>What to watch tonight?</h1>
     <p>Create your own movie list within seconds..</p>
   </div>
 </div>
 
-
 <div class="container py-5">
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h3 class="mb-0">My Lists</h3>
     <%= link_to "Create a movie list", new_list_path, class: "btn btn-flat" %>
+  </div>
+</div>
+
+<div class="container pb-5">
+  <div class="cards">
+    <% @lists.each do |list| %>
+      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= asset_url 'filmroll.jpg' %>)">
+        <h3><%= list.name %></h3>
+      </div>
+    <% end %>
   </div>
 </div>
