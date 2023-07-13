@@ -6,6 +6,7 @@ class ListsController < ApplicationController
   end
 
   def show
+    @movies = @list.movies
   end
 
   def new
@@ -15,7 +16,7 @@ class ListsController < ApplicationController
   def create
     @list = List.new(list_params)
     if @list.save
-      redirect_to lists_path notice: "You successfully created a movie list with the name: #{@list.name}"
+      redirect_to list_path(@list.id), notice: "You successfully created a movie list with the name: #{@list.name}"
     else
       flash[:alert] = 'Could not create the list  '
       render :new, status: :unprocessable_entity
