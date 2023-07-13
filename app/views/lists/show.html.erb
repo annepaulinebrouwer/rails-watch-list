@@ -4,13 +4,13 @@
     <p>What your favourite <%=@list.name %> movies..</p>
   </div>
 </div>
+
 <div class="container py-5">
   <div class="d-flex align-items-center justify-content-between mb-3">
     <%= link_to 'Back', lists_path, class: "btn btn-ghost" %>
     <h3 class="mb-0"></h3>
     <%= link_to "Add movie", new_list_bookmark_path(@list.id), class: "btn btn-flat" %>
   </div>
-
   <div class="cards my-2">
     <% @movies.each do |movie| %>
       <div class="d-flex flex-column">
@@ -25,11 +25,49 @@
           <div>
             <i class="fas fa-quote-left me-2"></i><small class="flex-grow-1"><%= bookmark.comment %></small>
           </div>
-          <small class="text-right flex-shrink-0"><%= link_to "delete", bookmark_path(bookmark.id), data: { turbo_method: :delete}, class: 'btn-delete' %></small>
+          <small class="text-right flex-shrink-0">
+            <%= link_to "delete", bookmark_path(bookmark.id),
+                data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove #{movie.title} from your #{@list.name} list"},
+                class: 'btn-delete' %>
+          </small>
         </div>
       </div>
     <% end %>
   </div>
 </div>
 
-<%# turbo_confirm: "Are you sure you want to remove #{movie.title} from your #{@list.name} list" %>
+<div class="container py-5">
+  <div class="row">
+  <div class="col-12 col-sm-6 col-md-8">
+    <h3>Reviews</h3>
+      <% if @list.reviews.empty? %>
+        <small><em class="text-muted">Be the first one to review this list</em></small>
+      <% end %>
+
+    <% @reviews.each do |review| %>
+      <div>
+        <% review.rating.to_i.times do %>
+          <i class="fas fa-star star-yellow"></i>
+        <% end %>
+        <small><em class="text-muted"><%= distance_of_time_in_words_to_now(review.created_at) %> ago</em></small>
+        <p class="mb-0"><%= review.comment %></p>
+      </div>
+    <% end %>
+  </div>
+
+
+
+  <div class="col-12 col-sm-6 col-md-4">
+    <div class="bg-white rounded p-3 shadow">
+      <h3>Write a review</h3>
+      <%= simple_form_for([@list, @review]) do |f| %>
+        <%= f.input :rating, as: :select, collection: (1..5), wrapper_html: { class: 'py-3' } %>
+        <%= f.input :comment, as: :text, placeholder: 'What do you think of this movie list?', label: false, input_html: { class: 'w-100' }  %>
+        <%= f.submit class: 'btn btn-flat mt-2' %>
+      <% end %>
+    </div>
+
+
+    </div>
+  </div>
+</div>

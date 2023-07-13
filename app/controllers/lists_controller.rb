@@ -7,6 +7,8 @@ class ListsController < ApplicationController
 
   def show
     @movies = @list.movies
+    @review = Review.new
+    @reviews = @list.reviews
   end
 
   def new
